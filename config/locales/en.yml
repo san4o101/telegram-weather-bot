@@ -1,0 +1,20 @@
+en:
+  telegram_webhooks:
+    action_missing:
+      command: Not found %{command}
+      feature: '%{action} feature is not implemented yet'
+    help:
+      content: Simple bot. Send geoposition!
+    message:
+      content: |
+        %{country_code} %{country_name}
+        🌡 Temperature: %{temp}
+        🌡 Temperature max: %{temp_max}
+        🌡 Temperature min: %{temp_min}
+        🧭 Wind deg: %{wind_deg}
+        🌬️ Wind speed: %{wind_speed} м\с
+        ☁️ Weather main: %{weather_main}
+        🌡Weather description: %{weather_description}
+      enter_location: Send location!
+    start:
+      content: Please send location!
