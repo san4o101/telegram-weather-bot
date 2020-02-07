@@ -12,7 +12,7 @@ en:
         🌡 Temperature max: %{temp_max} °C
         🌡 Temperature min: %{temp_min} °C
         🧭 Wind deg: %{wind_deg}
-        🌬️ Wind speed: %{wind_speed} м\с
+        🌬️ Wind speed: %{wind_speed} m\s
         ☁️ Weather main: %{weather_main}
         🌡Weather description: %{weather_description}
       enter_location: Send location!

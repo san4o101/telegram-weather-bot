@@ -1,6 +1,5 @@
 class TelegramWebhooksController < Telegram::Bot::UpdatesController
   include Telegram::Bot::UpdatesController::MessageContext
-  require 'open_weather'
 
   def start!(*)
     respond_with :message, text: t('.content')
@@ -8,6 +7,16 @@ class TelegramWebhooksController < Telegram::Bot::UpdatesController
 
   def help!(*)
     respond_with :message, text: t('.content')
+  end
+
+  def city!(city_name)
+    api = Rails.configuration.open_weather_api
+    weather = api.current city: city_name, country_code: ''
+    mess = change_message(weather)
+
+    render_message(mess)
+  rescue Exception => e
+    respond_with :message, text: e.message
   end
 
   def message(message)
@@ -18,18 +27,12 @@ class TelegramWebhooksController < Telegram::Bot::UpdatesController
     location_hash = message['location']
     latitude = location_hash['latitude']
     longitude = location_hash['longitude']
-    options = { units: 'metric', APPID: '77951f8731bb7c2327ec2ddd958625e0' }
-    weather = OpenWeather::Current.geocode(latitude, longitude, options)
+
+    api = Rails.configuration.open_weather_api
+    weather = api.current lon: longitude, lat: latitude
     mess = change_message(weather)
-    respond_with :message, text: t('.content', country_code: mess[:emoji_country],
-                                                    country_name: mess[:country_name],
-                                                    wind_speed: mess[:wind_speed],
-                                                    wind_deg: mess[:wind_deg],
-                                                    weather_main: mess[:weather_main],
-                                                    weather_description: mess[:weather_description],
-                                                    temp: mess[:temp],
-                                                    temp_max: mess[:temp_max],
-                                                    temp_min: mess[:temp_min])
+
+    render_message(mess)
   end
 
   def action_missing(action, *_args)
@@ -41,10 +44,13 @@ class TelegramWebhooksController < Telegram::Bot::UpdatesController
     end
   end
 
+  private
+
   def change_message(weather_info)
     result = {}
     result[:emoji_country] = EmojiFlag.new(change_flag_name(weather_info['sys']['country']))
     result[:country_name] = weather_info['name']
+    p weather_info
 
     wind = weather_info['wind']
     result[:wind_speed] = wind['speed']
@@ -64,6 +70,18 @@ class TelegramWebhooksController < Telegram::Bot::UpdatesController
 
   def change_flag_name(country)
     'uk' if country == 'UA'
+  end
+
+  def render_message(mess)
+    respond_with :message, text: t('.message.content', country_code: mess[:emoji_country],
+                                                            country_name: mess[:country_name],
+                                                            wind_speed: mess[:wind_speed],
+                                                            wind_deg: mess[:wind_deg],
+                                                            weather_main: mess[:weather_main],
+                                                            weather_description: mess[:weather_description],
+                                                            temp: mess[:temp],
+                                                            temp_max: mess[:temp_max],
+                                                            temp_min: mess[:temp_min])
   end
 
 end

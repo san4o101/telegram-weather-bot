@@ -28,7 +28,7 @@ gem 'turbolinks', '~> 5'
 
 gem 'telegram-bot', '0.14.0'
 # gem 'telegram-bot', path: '../telegram-bot'
-gem 'open-weather'
+gem 'open-weather-api'
 gem 'emoji_flag'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
