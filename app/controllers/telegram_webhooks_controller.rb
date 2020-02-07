@@ -27,9 +27,9 @@ class TelegramWebhooksController < Telegram::Bot::UpdatesController
                                                     wind_deg: mess[:wind_deg],
                                                     weather_main: mess[:weather_main],
                                                     weather_description: mess[:weather_description],
-                                                     temp: mess[:temp],
-                                                     temp_max: mess[:temp_max],
-                                                     temp_min: mess[:temp_min])
+                                                    temp: mess[:temp],
+                                                    temp_max: mess[:temp_max],
+                                                    temp_min: mess[:temp_min])
   end
 
   def action_missing(action, *_args)

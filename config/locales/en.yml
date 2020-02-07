@@ -8,9 +8,9 @@ en:
     message:
       content: |
         %{country_code} %{country_name}
-        🌡 Temperature: %{temp}
-        🌡 Temperature max: %{temp_max}
-        🌡 Temperature min: %{temp_min}
+        🌡 Temperature: %{temp} °C
+        🌡 Temperature max: %{temp_max} °C
+        🌡 Temperature min: %{temp_min} °C
         🧭 Wind deg: %{wind_deg}
         🌬️ Wind speed: %{wind_speed} м\с
         ☁️ Weather main: %{weather_main}
